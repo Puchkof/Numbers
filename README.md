@@ -1,2 +1,2 @@
 # Numbers
-Simple number series in C#
+Simple number series using deque in C#
