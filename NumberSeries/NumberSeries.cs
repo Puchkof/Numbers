@@ -9,79 +9,57 @@ namespace NumberSeries
     /// <summary>
     /// Class that describes series of numbers
     /// </summary>
-    public class NumberSeries
+    static public class NumberSeries
     {
-        // I have used Int32 size to prevent program working too long. For other types logic will be the same
-        private int seriesSize;
-        private int[] numbers;
-
-        /// <summary>
-        /// Initializes instance of NumberSeries class
-        /// </summary>
-        /// <param name="">Series size</param>
-        public NumberSeries(int size)
+        static public void PrintNumberByIndex(long index)
         {
-            seriesSize = size;
-            numbers = new int[seriesSize];
-            InitializeSeries();
-        }
-
-        /// <summary>
-        /// Initializes numbers in series
-        /// </summary>
-        private void InitializeSeries()
-        {
-            if (numbers == null)
+            Console.WriteLine("Your index: {0}", index);
+            var number = CalculateNumber(index);
+            if (number == 0)
             {
-                numbers = new int[seriesSize];
+                Console.WriteLine("Something went wrong. Try another index");
             }
-
-            for (int i = 0; i < seriesSize; ++i)
+            else
             {
-                // filling series with 3 first values
-                if (i == 0 || i == 1 || i == 2)
-                {
-                    numbers[i] = i == 2 ? 2 : 1;
-                    continue;
-                }
-
-
-                // preventing OverflowException
-                try
-                {
-                    // calculating value for series
-                    int value = checked(numbers[i - 1] + numbers[i - 2] + numbers[i - 3]);
-                    numbers[i] = value;
-                }
-                catch
-                {
-                    int j = i;
-
-                    while (j < seriesSize)
-                    {
-                        numbers[j++] = 0;
-                    }
-
-                    break;
-                }
+                Console.WriteLine("Your number: {0}", number);
             }
         }
 
-        public void PrintSeries()
+        static private long CalculateNumber(long index)
         {
-            // printing header
-            Console.WriteLine("Number series    Index");
-
-            var lineFormat = "{0, 13}{1, 9}";
-            for (int i = 0; i < seriesSize; ++i)
+            if (index < 0)
             {
-                if (numbers[i] == 0)
-                {
-                    Console.WriteLine("Next number/numbers are more than Int32.MaxValue");
-                    break;
-                }
-                Console.WriteLine(string.Format(lineFormat, numbers[i], i));
+                return 0;
             }
+
+            if (index == 0 || index == 1 || index == 2)
+            {
+                return index == 2 ? 2 : 1;
+            }
+
+            try
+            {
+                // filling deque with three first values
+                var deque = new Deque<long>();
+                deque.AddLast(1);
+                deque.AddLast(1);
+                deque.AddLast(2);
+
+                for (long i = 2; i < index; ++i)
+                {
+                    long value = checked(deque.ElementAt(2) + deque.ElementAt(1) + deque.ElementAt(0));
+                    deque.RemoveFirst();
+                    deque.AddLast(value);
+                }
+
+                return deque.Last();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return 0;
         }
     }
 }

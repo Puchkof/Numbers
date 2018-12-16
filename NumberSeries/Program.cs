@@ -12,21 +12,15 @@ namespace NumberSeries
         {
             while (true)
             {
-                Console.WriteLine("Enter size of your series: ");
-
-                // Preventing wrong input and System.OutOfMemoryException for too long inputs
                 try
                 {
-                    var size = Convert.ToInt32(Console.ReadLine());
-                    var numberSeries = new NumberSeries(size);
-                    numberSeries.PrintSeries();
-                    Console.WriteLine("Press any key to finish program execution");
-                    Console.ReadKey();
-                    break;
+                    Console.WriteLine("Enter your index: ");
+                    var index = Convert.ToInt32(Console.ReadLine());
+                    NumberSeries.PrintNumberByIndex(index);
                 }
                 catch
                 {
-                    Console.WriteLine("Something went wrong. Please try again");
+                    Console.WriteLine("Check your input and try again");
                 }
             }
         }
