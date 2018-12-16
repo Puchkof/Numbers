@@ -11,6 +11,11 @@ namespace NumberSeries
     /// </summary>
     static public class NumberSeries
     {
+
+        /// <summary>
+        /// Prints number by its index
+        /// </summary>
+        /// <param name="index"></param>
         static public void PrintNumberByIndex(long index)
         {
             Console.WriteLine("Your index: {0}", index);
@@ -25,6 +30,11 @@ namespace NumberSeries
             }
         }
 
+        /// <summary>
+        /// Calculates number by index
+        /// </summary>
+        /// <param name="index">Index of number</param>
+        /// <returns>Calculated number</returns>
         static private long CalculateNumber(long index)
         {
             if (index < 0)
